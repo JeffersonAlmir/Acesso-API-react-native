@@ -7,6 +7,7 @@ import axios from 'axios'
 import { IgitUser } from '@/interface/IgitUser';
 import DeleteModal from '@/components/modal/DeleteModal';
 import AddModal from '@/components/modal/AddModal';
+import GitUser from '@/components/gitUser/GitUser';
 
 
 export default function repositorioList() {
@@ -61,7 +62,7 @@ export default function repositorioList() {
       ...gitUser, newGitUser
     ]
     setGitUser(userPlus);
-    await AsyncStorage.setItem("@UserApp: Usuario", JSON.stringify(userPlus))
+    await AsyncStorage.setItem("@GitUserApp: gitUser", JSON.stringify(userPlus))
     setModalVisibleAdd(false);
   }
   const getGitUser =async (ownerid: string, repoid:string )=>{
@@ -80,6 +81,9 @@ export default function repositorioList() {
       }
     }catch (error) {
       console.error(error); 
+      //colocar alert
+      setModalVisibleAdd(false)
+      
     } 
   }
   
@@ -112,6 +116,21 @@ export default function repositorioList() {
         getFunction={getGitUser}
       />
       
+      {gitUser.map((user)=>{
+        return(
+          <GitUser
+            key={user.id}
+            id ={user.id}
+            avatar_url={user.avatar_url}
+            login={user.login}
+            name={user.name}
+            description={user.description}
+          
+          />
+        )
+      })
+
+      }
     </MyScrollView>
   );
 }
