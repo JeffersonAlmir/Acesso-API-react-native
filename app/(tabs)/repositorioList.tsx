@@ -27,7 +27,7 @@ export default function repositorioList() {
            }
        };
        getData();
-   },[])
+  },[])
 
   const openModalAdd = ()=>{   
     setModalVisibleAdd(true);
@@ -43,12 +43,13 @@ export default function repositorioList() {
   };
 
   const onDelete = async() =>{
+    setGitUser([])
     await AsyncStorage.setItem("@GitUserApp: gitUser", JSON.stringify([]))
     setModalVisibleDelete(false);
-  } 
+  };
 
 
-  const onAdd = async(id:number, avatar_url:string ,login:string, name:string, description:string) =>{
+  const onAdd = (id:number, avatar_url:string ,login:string, name:string, description:string) =>{
     const newGitUser: IgitUser ={
         
       id: id,
@@ -62,9 +63,10 @@ export default function repositorioList() {
       ...gitUser, newGitUser
     ]
     setGitUser(userPlus);
-    await AsyncStorage.setItem("@GitUserApp: gitUser", JSON.stringify(userPlus))
-    setModalVisibleAdd(false);
+    AsyncStorage.setItem("@GitUserApp: gitUser", JSON.stringify(userPlus))
+    
   }
+  
   const getGitUser =async (ownerid: string, repoid:string )=>{
 
     try{
@@ -85,6 +87,7 @@ export default function repositorioList() {
       setModalVisibleAdd(false)
       
     } 
+    setModalVisibleAdd(false);
   }
   
   return (
@@ -119,7 +122,7 @@ export default function repositorioList() {
       {gitUser.map((user)=>{
         return(
           <GitUser
-            key={user.id}
+            key={Math.random()*1000}
             id ={user.id}
             avatar_url={user.avatar_url}
             login={user.login}

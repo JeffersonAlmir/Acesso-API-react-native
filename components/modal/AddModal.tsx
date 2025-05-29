@@ -34,7 +34,6 @@ export default function AddModal({ visible, getFunction,onCancel}:ModalProps){
                         value = {repoid}
                         onChangeText={ text => setRepoid(text)}
                         placeholder="repoid"
-                        autoFocus
                     />
                     
                 </View>
